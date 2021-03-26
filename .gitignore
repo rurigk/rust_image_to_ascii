@@ -1,3 +1,6 @@
 /target
 /build
 .vscode/*
+/output
+/images/*
+^/images/bad_image.jpg

@@ -7,8 +7,6 @@ use std::path::Path;
 
 #[tokio::main]
 async fn main(){
-    //let mut futs = FuturesUnordered::new();
-
     let mut futures = vec![];
 
     let files = fs::read_dir("images").unwrap();
@@ -29,17 +27,6 @@ async fn main(){
                 output_file.push_str(file_name);
                 output_file.push_str(".txt");
 
-                println!("Queue add {}", file_path);
-
-                /*futs.push(task::spawn_blocking(process_image(
-                    input_file,
-                    output_file
-                )));*/
-                /*let threadpool_future = task::spawn_blocking(move || process_image(
-                    input_file,
-                    output_file
-                )).await.unwrap();
-                */
                 futures.push(process_image(
                     input_file,
                     output_file
@@ -47,9 +34,7 @@ async fn main(){
             }
         }
     }
-    //futures::future::join_all(futures).await;
-    //while let Some(_handled) = futures.next().await {}
-    //while let Some(_handled) = futs.next().await {}
+
     futures::future::join_all(futures).await;
 }
 
